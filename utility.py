@@ -48,8 +48,11 @@ def call_openai(prompt):
         response = client.invoke(messages)
         parser = StrOutputParser()
         response_content = parser.parse(response)
-    except:
-        print(f'Error making LLM call')
+        return response_content 
+    except Exception as e:
+        print(f'Error making LLM call: {e}')
+        return ''  # Return an empty string to avoid a NoneType error
+
 
 def update_readme_and_create_pr(repo, updated_readme, readme_sha):
     commit_message = "AI COMMIT: Proposed README update based on recent code changes."
