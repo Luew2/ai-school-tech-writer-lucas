@@ -1,23 +1,25 @@
-# AI for Developer Productivity: Technical Writer Agent
+Based on the code changes and commit messages from the GitHub pull request, here is a summary of the updates:
 
-## Overview
-In this project, we developed a **Technical Writer Agent** to enhance developer productivity. The core functionality of our agent leverages Retrieval-Augmented Generation (RAG) to dynamically update and refine technical documentation. This innovative approach not only streamlines the documentation process but also ensures that it remains accurate, up-to-date, and contextually relevant.
+1. In the `.github/workflows/update_readme.yaml` file:
+   - The `on` event now includes `push` to trigger workflow on all branch pushes.
+   - The Python version in the `Setup Python` step has been updated to '3.12'.
+   - Additional Python dependencies have been added to the `requirements.txt` file.
+   - The script to extract PR information and update the README has been modified for clarity.
+   - Debug logging has been enabled for troubleshooting purposes.
+  
+2. In the `main.py` file:
+   - There are no substantial changes, just a formatting adjustment.
 
-## Now It's Your Turn!
-Embrace your creativity and personalize this project to craft a solution that uniquely addresses the challenges and inefficiencies you face in your own environment. After seeing what our Technical Writer Agent can do, it’s time for you to take the reins. Use the foundation we’ve built and apply it to a challenge you face in your own professional or personal environment. Here’s how you can get started:
+3. In the `requirements.txt` file:
+   - New Python dependencies have been added.
 
-### Minimum Requirements
-1. **RAG Integration:** Successfully integrate Retrieval-Augmented Generation (RAG) to enable your agent to access and utilize external information when generating responses.
-2. **Vector Database Implementation:** Create and implement a vector data store capable of embedding and retrieving documents, ensuring that the system can access necessary information efficiently.
+4. In the `utility.py` file:
+   - The code has been updated to interact with the LangChain OpenAI module for processing AI feedback and updating the README file based on the AI agent's suggestions.
 
-### Stretch Goals
-1. **Enhanced UI/UX:** Develop a more advanced and user-friendly interface that includes features such as real-time suggestions, auto-completion of content, and a more interactive documentation process.
-2. **Automated Content Updates:** Implement a feature where the agent periodically checks and updates existing documentation based on new information or changes in the relevant field, ensuring that all documentation remains current without manual intervention.
-3. **Integration with Existing Tools:** Develop integrations for the agent with commonly used development tools and platforms (e.g., Confluence, Jira, Notion) to streamline workflows and increase accessibility.
-4. **Add The Features You Want**: Let your creativity shine by adding a unique feature that significantly simplifies or enhances your daily routines. Innovate with functionalities that solve problems and improve efficiency or satisfaction in meaningful ways.
+5. The commit messages mainly consist of test commits and pushes without any specific details.
 
-## Privacy and Submission Guidelines
-- **Submission Requirements:** Please submit a link to your public repo with your implementation or a loom video showcasing your work on the [BloomTech AI Platform](app.bloomtech.com). 
-- **Sensitive Information:** If your implementation involves sensitive information, you are not required to submit a public repository. Instead, a detailed review of your project through a Loom video is acceptable, where you can demonstrate the functionality and discuss the technologies used without exposing confidential data.
+6. The README content includes project overview, guidelines, and instructions for developers. The README is well-structured and provides information about the project, minimum requirements, stretch goals, and privacy guidelines.
 
----
+7. An instruction has been added to the README to consider the code changes and commit messages to determine if an update is needed, and if so, to edit the README while maintaining its existing style and clarity.
+
+Overall, the updates aim to automate the process of updating the README file based on AI feedback and provide detailed instructions for developers using the project.
