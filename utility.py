@@ -38,7 +38,6 @@ def format_data_for_openai(diffs, readme_content: ContentFile, commit_messages):
     return prompt
 
 def call_openai(prompt):
-    pass
     client = ChatOpenAI(api_key=os.getenv('OPENAI_API_KEY'), model='gpt-3.5-turbo-0125')
 
     try:
@@ -53,7 +52,6 @@ def call_openai(prompt):
         print(f'Error making LLM call')
 
 def update_readme_and_create_pr(repo, updated_readme, readme_sha):
-    pass
     commit_message = "AI COMMIT: Proposed README update based on recent code changes."
 
     commit_sha = os.getenv('COMMIT_SHA')
