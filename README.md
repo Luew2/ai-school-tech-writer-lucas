@@ -1,23 +1,25 @@
-# AI for Developer Productivity: Technical Writer Agent
+Based on the code changes and commit messages from the GitHub pull request, here is a summary of the updates made:
 
-## Overview
-In this project, we developed a **Technical Writer Agent** to enhance developer productivity. The core functionality of our agent leverages Retrieval-Augmented Generation (RAG) to dynamically update and refine technical documentation. This innovative approach not only streamlines the documentation process but also ensures that it remains accurate, up-to-date, and contextually relevant.
+1. In the `.github/workflows/update_readme.yaml` file:
+   - Changed the trigger types for the workflow to include both `opened` and `closed` pull requests.
+   - Updated the script to fetch the PR number and commit SHA using `jq`.
+   - Renamed the step for generating the updated README and updated the environment variables.
+   - Added a step to enable debug logging.
 
-## Now It's Your Turn!
-Embrace your creativity and personalize this project to craft a solution that uniquely addresses the challenges and inefficiencies you face in your own environment. After seeing what our Technical Writer Agent can do, it’s time for you to take the reins. Use the foundation we’ve built and apply it to a challenge you face in your own professional or personal environment. Here’s how you can get started:
+2. In the `main.py` file:
+   - No functional changes, only whitespace modifications.
 
-### Minimum Requirements
-1. **RAG Integration:** Successfully integrate Retrieval-Augmented Generation (RAG) to enable your agent to access and utilize external information when generating responses.
-2. **Vector Database Implementation:** Create and implement a vector data store capable of embedding and retrieving documents, ensuring that the system can access necessary information efficiently.
+3. In the `requirements.txt` file:
+   - Added new dependencies: `exceptiongroup`, `jsonpatch`, `jsonpointer`, `langchain-core`, `langchain-openai`, `langsmith`, `orjson`, `packaging`, `PyYAML`, `regex`, `tenacity`, `tiktoken`.
+   - Updated the version of `openai`.
+   - Removed `setuptools` and `wheel` dependencies.
 
-### Stretch Goals
-1. **Enhanced UI/UX:** Develop a more advanced and user-friendly interface that includes features such as real-time suggestions, auto-completion of content, and a more interactive documentation process.
-2. **Automated Content Updates:** Implement a feature where the agent periodically checks and updates existing documentation based on new information or changes in the relevant field, ensuring that all documentation remains current without manual intervention.
-3. **Integration with Existing Tools:** Develop integrations for the agent with commonly used development tools and platforms (e.g., Confluence, Jira, Notion) to streamline workflows and increase accessibility.
-4. **Add The Features You Want**: Let your creativity shine by adding a unique feature that significantly simplifies or enhances your daily routines. Innovate with functionalities that solve problems and improve efficiency or satisfaction in meaningful ways.
+4. In the `utility.py` file:
+   - Updated the import statement from `openai` to `langchain_openai`.
+   - Updated the function `format_data_for_openai` to include code changes and commit messages in the prompt.
+   - Updated the function `call_openai` to use the `ChatOpenAI` class and handle responses.
+   - Updated the function `update_readme_and_create_pr` to create a new branch, update the README file, and create a pull request.
 
-## Privacy and Submission Guidelines
-- **Submission Requirements:** Please submit a link to your public repo with your implementation or a loom video showcasing your work on the [BloomTech AI Platform](app.bloomtech.com). 
-- **Sensitive Information:** If your implementation involves sensitive information, you are not required to submit a public repository. Instead, a detailed review of your project through a Loom video is acceptable, where you can demonstrate the functionality and discuss the technologies used without exposing confidential data.
+Commit messages mostly consisted of "push" and "test" messages with no meaningful descriptions.
 
----
+Overall, the changes seem to focus on updating the workflow for generating the README based on AI feedback, adding new dependencies, and enhancing the utility functions for interacting with the OpenAI API. The README content has also been updated to reflect the changes made in the project.
