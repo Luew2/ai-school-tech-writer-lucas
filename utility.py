@@ -1,26 +1,22 @@
 import os
 import base64
-from openai import OpenAI
-from github import ContentFile
-
-def format_data_for_openai(diffs, readme_content, commit_messages):
-    prompt = None
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers.string import StrOutputParser
 
+def format_data_for_openai(diffs, readme_content, commit_messages):
 
-def format_data_for_openai(diffs, readme_content: ContentFile, commit_messages):
     # Combine the changes into a string with clear delineation.
-    changes = '\n'.join([
-        f'Filename: {file['filename']}\nDiff: \n{file['patch']}\n'
+
+    changes = "\n".join([
+        f"File: {file['filename']}\nDiff: \n{file['patch']}\n"
         for file in diffs
-    ])
+    ])+"\n\n"
 
     # Combine all commit messages
-    commit_messages = '\n'.join(commit_messages)
+    commit_messages = "\n".join(commit_messages)+"\n\n"
 
     # Decode the README content
-    readme_content = base64.b64decode(readme_content.content).decode('utf-8')
+    readme_content = readme_content.decoded_content.decode('utf-8')
 
     # Construct the prompt with clear instructions for the LLM.
     prompt = (
@@ -34,38 +30,40 @@ def format_data_for_openai(diffs, readme_content: ContentFile, commit_messages):
         "Consider the code changes and commit messages, determine if the README needs to be updated. If so, edit the README, ensuring to maintain its existing style and clarity.\n"
         "Updated README:\n"
     )
-
     return prompt
 
 def call_openai(prompt):
-    client = ChatOpenAI(api_key=os.getenv('OPENAI_API_KEY'), model='gpt-3.5-turbo-0125')
-
+    client = ChatOpenAI(api_key = os.getenv("OPENAI_API_KEY"), model="gpt-3.5-turbo")
+    messages = [
+        {"role": "system", "content": "You are a developer trained in updating README files from pull request messages"},
+        {"role": "user", "content": prompt}
+    ]
     try:
-        messages = [
-            {'role': 'system', 'content': 'You are an AI trained to help with updating useful context to README files based on commit messages and code changes'},
-            {'role': 'user', 'content': prompt}
-        ]
-        response = client.invoke(messages)
+        response = client.invoke(input=messages)
         parser = StrOutputParser()
-        response_content = parser.parse(response)
-        return response_content 
+        content = parser.invoke(input=response)
+        return content
     except Exception as e:
-        print(f'Error making LLM call: {e}')
-        return ''  # Return an empty string to avoid a NoneType error
-
+        return f"An error occurred: {e}"
 
 def update_readme_and_create_pr(repo, updated_readme, readme_sha):
-    commit_message = "AI COMMIT: Proposed README update based on recent code changes."
+    commit_message = "Update README based on Agent feedback"
 
-    commit_sha = os.getenv('COMMIT_SHA')
-    main_branch = repo.get_branch('main')
+    commit_sha = os.getenv("GITHUB_SHA")
+    main_branch = repo.get_branch("main")
     new_branch_name = f'update-readme-{commit_sha[:7]}'
     new_branch = repo.create_git_ref(ref=f'refs/heads/{new_branch_name}', sha=main_branch.commit.sha)
 
-    repo.update_file("README.md", commit_message, updated_readme, readme_sha, branch=new_branch)
+    repo.update_file(
+        path="README.md",
+        message=commit_message,
+        content=updated_readme,
+        sha=readme_sha,
+        branch=new_branch_name
+    )
 
-    pr_title = "AI PR: Update README based on recent change"
-    pr_body = "This is an AI PR. Please review the README"
-    pull_request = repo.create_pull(title=pr_title, body=pr_body, head=new_branch_name, base="main")
+    pr_title = "AI PR: Update README based on Agent feedback"
+    pr_body = "This PR updates the README based on feedback from an AI agent."
+    pr = repo.create_pull(title=pr_title, body=pr_body, base="main", head=new_branch_name)
 
-    return pull_request
+    return pr.html_url
